@@ -9,5 +9,5 @@ class Story {
     required this.user,
     required this.imageUrl,
     this.isViewed = false,
-  })
+  });
 }
