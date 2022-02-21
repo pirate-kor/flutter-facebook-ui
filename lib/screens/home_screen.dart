@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_ui/config/palette.dart';
+import 'package:flutter_facebook_ui/datas/data.dart';
 import 'package:flutter_facebook_ui/widgets/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -36,7 +37,11 @@ class HomeScreen extends StatelessWidget {
                     print('Messenger');
                   }),
             ],
-          )
+          ),
+          SliverToBoxAdapter(
+            child: CreatePostContainer(currentUser: currentUser,),
+          ),
+
         ],
       ),
     );
