@@ -29,19 +29,29 @@ class HomeScreen extends StatelessWidget {
             floating: true,
             actions: [
               CircleButton(
-                  icon: Icons.search, iconSize: 30.0, onPressed: () {
+                  icon: Icons.search,
+                  iconSize: 30.0,
+                  onPressed: () {
                     print('Search');
                   }),
               CircleButton(
-                  icon: MdiIcons.facebookMessenger, iconSize: 30.0, onPressed: () {
+                  icon: MdiIcons.facebookMessenger,
+                  iconSize: 30.0,
+                  onPressed: () {
                     print('Messenger');
                   }),
             ],
           ),
           SliverToBoxAdapter(
-            child: CreatePostContainer(currentUser: currentUser,),
+            child: CreatePostContainer(
+              currentUser: currentUser,
+            ),
           ),
-
+          SliverPadding(
+              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
+              sliver: SliverToBoxAdapter(
+                child: Rooms(onlineUsers: onlineUsers),
+              ))
         ],
       ),
     );
