@@ -84,11 +84,13 @@ class _StoryCard extends StatelessWidget {
                     icon: const Icon(Icons.add),
                     iconSize: 30.0,
                     color: Palette.facebookBlue,
-                    onPressed: () {},
+                    onPressed: () {
+                      print('Add to story'); 
+                    },
                   ),
                 )
               : ProfileAvatar(
-                  imageUrl: story!.imageUrl,
+                  imageUrl: story!.user.imageUrl,
                   hasBorder: !story!.isViewed,
                 )),
         Positioned(
