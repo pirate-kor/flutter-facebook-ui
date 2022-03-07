@@ -30,7 +30,7 @@ class CreatePostContainer extends StatelessWidget {
                 Expanded(
                     child: TextField(
                   decoration: InputDecoration.collapsed(
-                      hintText: 'Better than Yesterday'),
+                      hintText: "What's on your mind?"),
                 ))
               ],
             ),
