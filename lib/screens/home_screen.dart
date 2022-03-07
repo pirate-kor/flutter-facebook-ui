@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         body: Responsive(
           mobile: _HomeScreenMobile(),
-          desktop: ,
+          desktop: _HomeScreenDesktop(),
         ),
       ),
     );
@@ -24,65 +24,115 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HomeScreenMobile extends StatelessWidget {
-  const _HomeScreenMobile({ Key? key }) : super(key: key);
+  const _HomeScreenMobile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle.light,
-                backgroundColor: Colors.white,
-                title: Text(
-                  'facebook',
-                  style: const TextStyle(
-                    color: Palette.facebookBlue,
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1.2,
+      slivers: [
+        SliverAppBar(
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+          backgroundColor: Colors.white,
+          title: Text(
+            'facebook',
+            style: const TextStyle(
+              color: Palette.facebookBlue,
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -1.2,
+            ),
+          ),
+          centerTitle: false,
+          floating: true,
+          actions: [
+            CircleButton(
+                icon: Icons.search,
+                iconSize: 30.0,
+                onPressed: () {
+                  print('Search');
+                }),
+            CircleButton(
+                icon: MdiIcons.facebookMessenger,
+                iconSize: 30.0,
+                onPressed: () {
+                  print('Messenger');
+                }),
+          ],
+        ),
+        SliverToBoxAdapter(
+          child: CreatePostContainer(
+            currentUser: currentUser,
+          ),
+        ),
+        SliverPadding(
+            padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
+            sliver: SliverToBoxAdapter(
+              child: Rooms(onlineUsers: onlineUsers),
+            )),
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
+          sliver: SliverToBoxAdapter(
+            child: Stories(currentUser: currentUser, stories: stories),
+          ),
+        ),
+        SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+          final Post post = posts[index];
+          return PostContainer(post: post);
+        }, childCount: posts.length))
+      ],
+    );
+  }
+}
+
+class _HomeScreenDesktop extends StatelessWidget {
+  const _HomeScreenDesktop({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+            flex: 2,
+            child: Container(
+              color: Colors.orange,
+            )),
+        const Spacer(),
+        Container(
+            width: 600.0,
+            child: CustomScrollView(
+              slivers: [
+                SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 10.0),
+                    sliver: SliverToBoxAdapter(
+                      child: Rooms(onlineUsers: onlineUsers),
+                    )),
+                SliverToBoxAdapter(
+                  child: CreatePostContainer(
+                    currentUser: currentUser,
                   ),
                 ),
-                centerTitle: false,
-                floating: true,
-                actions: [
-                  CircleButton(
-                      icon: Icons.search,
-                      iconSize: 30.0,
-                      onPressed: () {
-                        print('Search');
-                      }),
-                  CircleButton(
-                      icon: MdiIcons.facebookMessenger,
-                      iconSize: 30.0,
-                      onPressed: () {
-                        print('Messenger');
-                      }),
-                ],
-              ),
-              SliverToBoxAdapter(
-                child: CreatePostContainer(
-                  currentUser: currentUser,
-                ),
-              ),
-              SliverPadding(
+                
+                SliverPadding(
                   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
                   sliver: SliverToBoxAdapter(
-                    child: Rooms(onlineUsers: onlineUsers),
-                  )),
-              SliverPadding(
-                padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
-                sliver: SliverToBoxAdapter(
-                  child: Stories(currentUser: currentUser, stories: stories),
+                    child: Stories(currentUser: currentUser, stories: stories),
+                  ),
                 ),
-              ),
-              SliverList(delegate: SliverChildBuilderDelegate(
-                (context, index) {
+                SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
                   final Post post = posts[index];
                   return PostContainer(post: post);
-                },
-                childCount: posts.length
-              ))
-            ],
+                }, childCount: posts.length))
+              ],
+            )),
+        const Spacer(),
+        Flexible(
+            flex: 2,
+            child: Container(
+              color: Colors.orange,
+            )),
+      ],
     );
   }
 }

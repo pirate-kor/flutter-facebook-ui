@@ -15,7 +15,7 @@ class Stories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200.0,
-      color: Colors.white,
+      color: Responsive.isDesktop(context) ? Colors.transparent : Colors.white,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
         scrollDirection: Axis.horizontal,
@@ -44,10 +44,7 @@ class _StoryCard extends StatelessWidget {
   final Story? story;
 
   const _StoryCard(
-      {Key? key,
-      this.isAddStory = false,
-      this.currentUser,
-      this.story})
+      {Key? key, this.isAddStory = false, this.currentUser, this.story})
       : super(key: key);
 
   @override
@@ -68,6 +65,14 @@ class _StoryCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: Palette.storyGradient,
           borderRadius: BorderRadius.circular(12.0),
+          boxShadow: Responsive.isDesktop(context)
+              ? const [
+                  BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      blurRadius: 4.0)
+                ]
+              : null,
         ),
       ),
       Positioned(
@@ -85,7 +90,7 @@ class _StoryCard extends StatelessWidget {
                     iconSize: 30.0,
                     color: Palette.facebookBlue,
                     onPressed: () {
-                      print('Add to story'); 
+                      print('Add to story');
                     },
                   ),
                 )
@@ -93,20 +98,18 @@ class _StoryCard extends StatelessWidget {
                   imageUrl: story!.user.imageUrl,
                   hasBorder: !story!.isViewed,
                 )),
-        Positioned(
-          bottom: 8.0,
-          left: 8.0,
-          right: 8.0,
-          child: Text(
-            isAddStory ? 'Add to Story' : story!.user.name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+      Positioned(
+        bottom: 8.0,
+        left: 8.0,
+        right: 8.0,
+        child: Text(
+          isAddStory ? 'Add to Story' : story!.user.name,
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
+      ),
     ]);
   }
 }
