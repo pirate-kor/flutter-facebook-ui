@@ -115,8 +115,12 @@ class _HomeScreenDesktop extends StatelessWidget {
       children: [
         Flexible(
             flex: 2,
-            child: Container(
-              color: Colors.orange,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: MoreOptionsList(currentUser: currentUser)
+              ),
             )),
         const Spacer(),
         Container(
@@ -125,21 +129,21 @@ class _HomeScreenDesktop extends StatelessWidget {
               controller: scrollController,
               slivers: [
                 SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 10.0),
-                    sliver: SliverToBoxAdapter(
-                      child: Rooms(onlineUsers: onlineUsers),
-                    )),
+                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
+                  sliver: SliverToBoxAdapter(
+                    child: Stories(currentUser: currentUser, stories: stories),
+                  ),
+                ),
                 SliverToBoxAdapter(
                   child: CreatePostContainer(
                     currentUser: currentUser,
                   ),
                 ),
                 SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
-                  sliver: SliverToBoxAdapter(
-                    child: Stories(currentUser: currentUser, stories: stories),
-                  ),
-                ),
+                    padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 10.0),
+                    sliver: SliverToBoxAdapter(
+                      child: Rooms(onlineUsers: onlineUsers),
+                    )),
                 SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
                   final Post post = posts[index];
@@ -150,9 +154,12 @@ class _HomeScreenDesktop extends StatelessWidget {
         const Spacer(),
         Flexible(
             flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ContactsList(users: onlineUsers),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ContactsList(users: onlineUsers),
+              ),
             )),
       ],
     );
